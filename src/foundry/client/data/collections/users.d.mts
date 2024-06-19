@@ -7,7 +7,7 @@ declare global {
    *
    * @see {@link User} The User document
    */
-  class Users extends WorldCollection<typeof foundry.documents.BaseUser, "Users"> {
+  class Users extends WorldCollection<typeof foundry.documents.BaseUser> {
     constructor(data?: User["_source"][]);
 
     /**

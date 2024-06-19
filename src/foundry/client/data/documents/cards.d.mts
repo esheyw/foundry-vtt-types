@@ -155,21 +155,6 @@ declare global {
      */
     protected _drawCards(number: number, how: foundry.CONST.CARD_DRAW_MODES): Card.ConfiguredInstance[];
 
-    /**
-     * Create a ChatMessage which provides a notification of the cards operation which was just performed.
-     * Visibility of the resulting message is linked to the default roll mode selected in the chat log dropdown.
-     * @param source  - The source Cards document from which the action originated
-     * @param action  - The localization key which formats the chat message notification
-     * @param context - Data passed to the i18n.format method for the localization key
-     * @returns A created ChatMessage document
-     * @internal
-     */
-    protected _postChatNotification(
-      source: Cards.ConfiguredInstance,
-      action: string,
-      context: Record<string, unknown>,
-    ): Promise<ChatMessage.ConfiguredInstance | undefined>;
-
     protected override _onUpdate(
       data: DeepPartial<Cards["_source"]>,
       options: DocumentModificationOptions,
@@ -218,15 +203,6 @@ declare global {
      * @see {@link Cards#reset}
      */
     resetDialog(): Promise<Cards.ConfiguredInstance | false | null>;
-
-    override deleteDialog(options?: Partial<DialogOptions>): Promise<this | false | null | undefined>;
-
-    // TODO: It's a bit weird that we have to do it in this generic way but otherwise there is an error overriding this. Investigate later.
-    static override createDialog<T extends DocumentConstructor>(
-      this: T,
-      data?: DeepPartial<Cards["_source"] | (Cards["_source"] & Record<string, unknown>)>,
-      context?: Pick<DocumentModificationContext, "parent" | "pack"> & Partial<DialogOptions>,
-    ): Promise<InstanceType<ConfiguredDocumentClass<T>> | null | undefined>;
   }
 
   namespace Cards {

@@ -22,12 +22,6 @@ declare global {
     _source: InstanceType<T>["_source"][];
 
     /**
-     * An Array of application references which will be automatically updated when the collection content changes
-     * @defaultValue `[]`
-     */
-    apps: Application[];
-
-    /**
      * Initialize the DocumentCollection by constructing any initially provided Document instances
      * @internal
      */
@@ -117,11 +111,6 @@ declare global {
     delete: (id: string) => boolean;
 
     /**
-     * Render any Applications associated with this DocumentCollection.
-     */
-    render(force?: boolean, options?: ApplicationOptions): void;
-
-    /**
      * Get the searchable fields for a given document or index, based on its data model
      * @param documentName    - The document type name
      * @param documentSubtype - The document subtype name
@@ -147,11 +136,6 @@ declare global {
          * @defaultValue `""`
          */
         query: string;
-        /**
-         * An array of filters to apply
-         * @defaultValue `[]`
-         */
-        filters: FieldFilter[];
         /**
          * An array of document IDs to exclude from search results
          * @defaultValue `[]`

@@ -27,9 +27,9 @@ declare global {
   /**
    * Critical server-side startup messages which need to be displayed to the client.
    */
-  let MESSAGES:
-    | { type: Notifications.Notification["type"]; message: string; options: Notifications.NotifyOptions }[]
-    | null;
+  // let MESSAGES:
+  //   | { type: Notifications.Notification["type"]; message: string; options: Notifications.NotifyOptions }[]
+  //   | null;
 
   /**
    * A collection of application instances
@@ -37,18 +37,18 @@ declare global {
    * - All of the elements of {@link ui} except for `context` and `window` are initialized between the `"setup"` and `"ready"` hook events.
    * - In the `/stream` view, only `chat` is initialized but none of the other {@link Application}s.
    */
-  let ui: {
-    /**
-     * @remarks
-     * Initialized whenever a {@link ContextMenu} is opened, deleted when it's closed again.
-     */
-    context?: ContextMenu;
+  // let ui: {
+  //   /**
+  //    * @remarks
+  //    * Initialized whenever a {@link ContextMenu} is opened, deleted when it's closed again.
+  //    */
+  //   context?: ContextMenu;
 
-    /**
-     * @defaultValue `{}`
-     */
-    windows: Record<number, Application>;
-  } & ("ui" extends keyof LenientGlobalVariableTypes ? UiApplications : Partial<UiApplications>);
+  //   /**
+  //    * @defaultValue `{}`
+  //    */
+  //   windows: Record<number, Application>;
+  // } & ("ui" extends keyof LenientGlobalVariableTypes ? UiApplications : Partial<UiApplications>);
 
   /**
    * The client side console logger
@@ -62,6 +62,6 @@ declare global {
   var Color: typeof foundry.utils.Color; // eslint-disable-line no-var
 }
 
-type UiApplications = {
-  [Key in keyof CONFIG["ui"]]: InstanceType<CONFIG["ui"][Key]>;
-};
+// type UiApplications = {
+//   [Key in keyof CONFIG["ui"]]: InstanceType<CONFIG["ui"][Key]>;
+// };

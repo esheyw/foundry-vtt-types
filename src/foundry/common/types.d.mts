@@ -201,7 +201,7 @@ declare global {
     icon?: string | undefined;
 
     /** The FormApplication to render */
-    type: new () => FormApplication<any, any>;
+    // type: new () => FormApplication<any, any>;
 
     /** If true, only a GM can edit this Setting */
     restricted?: boolean | undefined;

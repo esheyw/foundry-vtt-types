@@ -11,44 +11,44 @@ type ObjectToDeepPartial<T> = T extends object ? DeepPartial<T> : T;
 
 export type DocumentConstructor = foundry.abstract.Document.Constructor;
 
-export type PlaceableObjectConstructor = Pick<typeof PlaceableObject, keyof typeof PlaceableObject> &
-  (new (...args: any[]) => PlaceableObject<any>);
+// export type PlaceableObjectConstructor = Pick<typeof PlaceableObject, keyof typeof PlaceableObject> &
+//   (new (...args: any[]) => PlaceableObject<any>);
 
 export type ConfiguredDocumentClass<T extends DocumentConstructor> = ConfiguredDocumentClassForName<
   T["metadata"]["name"]
 >;
 
 export type DocumentType =
-  | "ActiveEffect"
-  | "ActorDelta"
-  | "Actor"
-  | "Adventure"
-  | "AmbientLight"
-  | "AmbientSound"
+  // | "ActiveEffect"
+  // | "ActorDelta"
+  // | "Actor"
+  // | "Adventure"
+  // | "AmbientLight"
+  // | "AmbientSound"
   | "Card"
   | "Cards"
-  | "ChatMessage"
-  | "Combat"
-  | "Combatant"
-  | "Drawing"
-  | "FogExploration"
+  // | "ChatMessage"
+  // | "Combat"
+  // | "Combatant"
+  // | "Drawing"
+  // | "FogExploration"
   | "Folder"
-  | "Item"
-  | "JournalEntryPage"
-  | "JournalEntry"
-  | "Macro"
-  | "MeasuredTemplate"
-  | "Note"
-  | "PlaylistSound"
-  | "Playlist"
-  | "RollTable"
-  | "Scene"
-  | "Setting"
-  | "TableResult"
-  | "Tile"
-  | "Token"
-  | "User"
-  | "Wall";
+  // | "Item"
+  // | "JournalEntryPage"
+  // | "JournalEntry"
+  // | "Macro"
+  // | "MeasuredTemplate"
+  // | "Note"
+  // | "PlaylistSound"
+  // | "Playlist"
+  // | "RollTable"
+  // | "Scene"
+  // | "Setting"
+  // | "TableResult"
+  // | "Tile"
+  // | "Token"
+  | "User";
+// | "Wall";
 
 export type PlaceableDocumentType =
   | "AmbientLight"
@@ -76,7 +76,7 @@ export type DocumentSubTypes<T extends DocumentType> = "type" extends keyof Inst
 
 export type ConfiguredDocumentClassForName<Name extends DocumentType> = CONFIG[Name]["documentClass"];
 
-export type ConfiguredObjectClassForName<Name extends PlaceableDocumentType> = CONFIG[Name]["objectClass"];
+// export type ConfiguredObjectClassForName<Name extends PlaceableDocumentType> = CONFIG[Name]["objectClass"];
 
 export type ConfiguredData<Name extends string> = Name extends keyof DataConfig ? DataConfig[Name] : {};
 

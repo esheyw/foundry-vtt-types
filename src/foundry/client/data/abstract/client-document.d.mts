@@ -1,9 +1,5 @@
-import type {
-  ConfiguredDocumentClass,
-  ConstructorDataType,
-  DocumentConstructor,
-} from "../../../../types/helperTypes.d.mts";
-import type { ConstructorOf, DeepPartial, InexactPartial, Mixin, ValueOf } from "../../../../types/utils.d.mts";
+import type { ConfiguredDocumentClass, DocumentConstructor } from "../../../../types/helperTypes.d.mts";
+import type { DeepPartial, InexactPartial, Mixin, ValueOf } from "../../../../types/utils.d.mts";
 import type { AnyMetadata, DocumentModificationOptions } from "../../../common/abstract/document.d.mts";
 
 declare class ClientDocument<
@@ -16,21 +12,6 @@ declare class ClientDocument<
 > {
   constructor(data?: BaseDocument["_source"], context?: DocumentConstructionContext);
 
-  /**
-   * A collection of Application instances which should be re-rendered whenever this document is updated.
-   * The keys of this object are the application ids and the values are Application instances. Each
-   * Application in this object will have its render method called by {@link Document#render}.
-   * @see {@link Document#render}
-   * @defaultValue `{}`
-   */
-  readonly apps: Record<string, Application>;
-
-  /**
-   * A cached reference to the FormApplication instance used to configure this Document.
-   * @defaultValue `null`
-   */
-  protected readonly _sheet: FormApplication | null; // TODO: Replace with InstanceType<ConfiguredSheetClass<T>> once the circular reference problem has been solved
-
   static name: "ClientDocumentMixin";
 
   /**
@@ -42,13 +23,6 @@ declare class ClientDocument<
    * Return a reference to the parent Collection instance which contains this Document.
    */
   get collection(): Collection<this>;
-
-  /**
-   * A reference to the Compendium Collection which contains this Document, if any, otherwise undefined.
-   */
-  get compendium(): ConcreteMetadata extends CompendiumCollection.Metadata
-    ? CompendiumCollection<ConcreteMetadata>
-    : undefined;
 
   /**
    * A boolean indicator for whether or not the current game User has ownership rights for this Document.
@@ -85,11 +59,6 @@ declare class ClientDocument<
   get permission(): ValueOf<typeof CONST.DOCUMENT_OWNERSHIP_LEVELS>;
 
   /**
-   * Lazily obtain a FormApplication instance used to configure this Document, or null if no sheet is available.
-   */
-  get sheet(): FormApplication | null; // TODO: Replace mit InstanceType<ConfiguredSheetClass<T>> once the circular reference problem has been solved
-
-  /**
    * A Universally Unique Identifier (uuid) for this Document instance.
    */
   get uuid(): string;
@@ -99,11 +68,6 @@ declare class ClientDocument<
    * Different Document types may have more specialized rules for what determines visibility.
    */
   get visible(): boolean;
-
-  /**
-   * Obtain the FormApplication class constructor which should be used to configure this Document.
-   */
-  protected _getSheetClass(): ConstructorOf<FormApplication> | null; // TODO: Replace with ConfiguredSheetClass<T> once the circular reference problem has been solved
 
   /**
    * Safely prepare data for a Document, catching any errors.
@@ -133,24 +97,6 @@ declare class ClientDocument<
    * Compute data fields whose values are not stored to the database.
    */
   prepareDerivedData(): void;
-
-  /**
-   * Render all of the Application instances which are connected to this document by calling their respective
-   * @see Application#render
-   * @param force   - Force rendering
-   *                  (default: `false`)
-   * @param context - Optional context
-   *                  (default: `{}`)
-   */
-  render(force?: boolean, context?: Application.RenderOptions): void;
-
-  /**
-   * Determine the sort order for this Document by positioning it relative a target sibling.
-   * See SortingHelper.performIntegerSort for more details
-   * @param options - Sorting options provided to SortingHelper.performIntegerSort
-   * @returns The Document after it has been re-sorted
-   */
-  sortRelative(options?: InexactPartial<ClientDocument.SortOptions<this>>): Promise<this>;
 
   /**
    * Construct a UUID relative to another document.
@@ -340,30 +286,6 @@ declare class ClientDocument<
   static defaultName(): string;
 
   /**
-   * Present a Dialog form to create a new Document of this type.
-   * Choose a name and a type from a select menu of types.
-   * @param data    - Initial data with which to populate the creation form
-   *                  (default: `{}`)
-   * @param context - Additional context options or dialog positioning options
-   *                  (default: `{}`)
-   * @returns A Promise which resolves to the created Document, or null if the dialog was
-   *          closed.
-   */
-  static createDialog<T extends DocumentConstructor>(
-    this: T,
-    data?: DeepPartial<ConstructorDataType<T> | (ConstructorDataType<T> & Record<string, unknown>)>,
-    context?: Pick<DocumentModificationContext, "parent" | "pack"> & Partial<DialogOptions>,
-  ): Promise<InstanceType<ConfiguredDocumentClass<T>> | null | undefined>;
-
-  /**
-   * Present a Dialog form to confirm deletion of this Document.
-   * @param options - Positioning and sizing options for the resulting dialog
-   *                  (default: `{}`)
-   * @returns A Promise which resolves to the deleted Document
-   */
-  deleteDialog(options?: Partial<DialogOptions>): Promise<this | false | null | undefined>;
-
-  /**
    * Export document data to a JSON file which can be saved by the client and later imported into a different session.
    * @param options - Additional options passed to the {@link ClientDocument#toCompendium} method
    */
@@ -439,37 +361,6 @@ declare class ClientDocument<
    * Render an import dialog for updating the data related to this Document through an exported JSON file
    */
   importFromJSONDialog(): Promise<void>;
-
-  /**
-   * Transform the Document data to be stored in a Compendium pack.
-   * Remove any features of the data which are world-specific.
-   * @param pack    - A specific pack being exported to
-   * @param options - Additional options which modify how the document is converted
-   *                  (default: `{}`)
-   * @returns A data object of cleaned data suitable for compendium import
-   */
-  toCompendium<
-    FlagsOpt extends boolean = false,
-    SourceOpt extends boolean = true,
-    SortOpt extends boolean = true,
-    FolderOpt extends boolean = false,
-    OwnershipOpt extends boolean = false,
-    StateOpt extends boolean = true,
-    IdOpt extends boolean = false,
-  >(
-    pack?: CompendiumCollection<CompendiumCollection.Metadata> | null,
-    options?: InexactPartial<
-      ClientDocument.CompendiumExportOptions<FlagsOpt, SourceOpt, SortOpt, FolderOpt, OwnershipOpt, StateOpt, IdOpt>
-    >,
-  ): Omit<
-    BaseDocument["_source"],
-    | (IdOpt extends false ? "_id" : never)
-    | ClientDocument.OmitProperty<SortOpt, "sort" | "navigation" | "navOrder"> // helping out Scene
-    | ClientDocument.OmitProperty<FolderOpt, "folder">
-    | ClientDocument.OmitProperty<FlagsOpt, "flags">
-    | ClientDocument.OmitProperty<OwnershipOpt, "ownership">
-    | ClientDocument.OmitProperty<StateOpt, "active" | "fogReset" | "playing"> // helping out Playlist, Scene
-  >;
 
   /**
    * Preliminary actions taken before a set of embedded Documents in this parent Document are created.
@@ -580,14 +471,6 @@ declare global {
   ): Mixin<typeof ClientDocument, BaseClass>;
 
   namespace ClientDocument {
-    interface SortOptions<T, SortKey extends string = "sort"> extends SortingHelpers.SortOptions<T, SortKey> {
-      /**
-       * Additional data changes which are applied to each sorted document
-       * @defaultValue `{}`
-       */
-      updateData?: any;
-    }
-
     // TODO: This may be better defined elsewhere
     type lifeCycleEventName = "preCreate" | "onCreate" | "preUpdate" | "onUpdate" | "preDelete" | "onDelete";
 

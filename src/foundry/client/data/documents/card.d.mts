@@ -1,5 +1,4 @@
 import type { ConfiguredDocumentClassForName } from "../../../../types/helperTypes.d.mts";
-import type { DeepPartial } from "../../../../types/utils.d.mts";
 
 declare global {
   /**
@@ -89,19 +88,6 @@ declare global {
      * @returns A reference to the reset card belonging to its original parent
      */
     recall(options?: Cards.ResetOptions): Promise<Card.ConfiguredInstance>;
-
-    /**
-     * Create a chat message which displays this Card.
-     * @param messageData - Additional data which becomes part of the created ChatMessageData
-     *                      (default: `{}`)
-     * @param options     - Options which modify the message creation operation
-     *                      (default: `{}`)
-     * @returns The created chat message
-     */
-    toMessage(
-      messageData?: DeepPartial<foundry.documents.BaseChatMessage.ConstructorData>,
-      options?: DocumentModificationContext,
-    ): Promise<ChatMessage.ConfiguredInstance | undefined>;
   }
 
   namespace Card {

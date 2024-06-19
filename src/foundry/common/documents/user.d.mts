@@ -3,7 +3,6 @@ import type Document from "../abstract/document.mts";
 import type { DocumentMetadata } from "../abstract/document.mts";
 import type * as CONST from "../constants.mts";
 import type * as fields from "../data/fields.mts";
-import type BaseActor from "./actor.mts";
 
 declare global {
   type UserData = BaseUser.Properties;
@@ -185,7 +184,7 @@ declare namespace BaseUser {
      * A linked Actor document that is this user's impersonated character.
      * @defaultValue `null`
      */
-    character: fields.ForeignDocumentField<BaseActor>;
+    // character: fields.ForeignDocumentField<BaseActor>;
 
     /**
      * A color to represent this user.

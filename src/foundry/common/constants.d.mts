@@ -226,17 +226,17 @@ export declare const DEFAULT_TOKEN: "icons/svg/mystery-man.svg";
  * Define the allowed Document class types.
  */
 export declare const DOCUMENT_TYPES: readonly [
-  "Actor",
+  // "Actor",
   "Cards",
-  "ChatMessage",
-  "Combat",
-  "Item",
+  // "ChatMessage",
+  // "Combat",
+  // "Item",
   "Folder",
-  "JournalEntry",
-  "Macro",
-  "Playlist",
-  "RollTable",
-  "Scene",
+  // "JournalEntry",
+  // "Macro",
+  // "Playlist",
+  // "RollTable",
+  // "Scene",
   "User",
 ];
 export type DOCUMENT_TYPES = ValueOf<typeof DOCUMENT_TYPES>;
@@ -375,15 +375,15 @@ export type DRAWING_FILL_TYPES = ValueOf<typeof DRAWING_FILL_TYPES>;
  * Define the allowed Document types which Folders may contain
  */
 export declare const FOLDER_DOCUMENT_TYPES: readonly [
-  "Actor",
-  "Adventure",
-  "Item",
-  "Scene",
-  "JournalEntry",
-  "Playlist",
-  "RollTable",
+  // "Actor",
+  // "Adventure",
+  // "Item",
+  // "Scene",
+  // "JournalEntry",
+  // "Playlist",
+  // "RollTable",
   "Cards",
-  "Macro",
+  // "Macro",
   "Compendium",
 ];
 export type FOLDER_DOCUMENT_TYPES = ValueOf<typeof FOLDER_DOCUMENT_TYPES>;

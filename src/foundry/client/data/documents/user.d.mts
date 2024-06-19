@@ -29,20 +29,11 @@ declare global {
     /** The position of the user's cursor. */
     cursor: { x: number; y: number } | null;
 
-    /** The state of the user's ruler, if they are currently using one. */
-    ruler: RulerData | null;
-
     /** The IDs of the tokens the user has targeted in the currently viewed */
     targets: string[];
 
     /** Whether the user has an open WS connection to the server or not. */
     active: boolean;
-
-    /** Is the user emitting a ping at the cursor coordinates? */
-    ping: PingData;
-
-    /** The state of the user's AV settings. */
-    av: AVSettingsData;
   }
 
   /**
@@ -57,11 +48,6 @@ declare global {
      * @defaultValue `false`
      */
     active: boolean;
-
-    /**
-     * Track references to the current set of Tokens which are targeted by the User
-     */
-    targets: UserTargets;
 
     /**
      * Track the ID of the Scene that is currently being viewed by the User
@@ -80,19 +66,6 @@ declare global {
     get isSelf(): boolean;
 
     override prepareDerivedData(): void;
-
-    /**
-     * Assign a Macro to a numbered hotbar slot between 1 and 50
-     * @param macro    - The Macro document to assign
-     * @param slot     - A specific numbered hotbar slot to fill
-     * @param fromSlot - An optional origin slot from which the Macro is being shifted
-     * @returns A Promise which resolves once the User update is complete
-     */
-    assignHotbarMacro(
-      macro: Macro.ConfiguredInstance | null,
-      slot: string | number,
-      { fromSlot }?: { fromSlot: number },
-    ): Promise<this>;
 
     /**
      * Assign a specific boolean permission to this user.
@@ -119,13 +92,6 @@ declare global {
         volatile: boolean;
       }>,
     ): void;
-
-    /**
-     * Get an Array of Macro Documents on this User's Hotbar by page
-     * @param page - The hotbar page number
-     *               (default: `1`)
-     */
-    getHotbarMacros(page?: number): Array<{ slot: number; macro: Macro.ConfiguredInstance | null }>;
 
     /**
      * Update the set of Token targets for the user given an array of provided Token ids.

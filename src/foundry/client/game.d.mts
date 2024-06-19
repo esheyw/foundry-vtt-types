@@ -1,10 +1,5 @@
 import type { Socket } from "socket.io-client";
-import type {
-  ConfiguredDocumentClassForName,
-  ConfiguredModule,
-  DocumentConstructor,
-  ModuleRequiredOrOptional,
-} from "../../types/helperTypes.d.mts";
+import type { ConfiguredDocumentClassForName, DocumentConstructor } from "../../types/helperTypes.d.mts";
 import type { StoredDocument, ValueOf } from "../../types/utils.d.mts";
 
 // TODO: Apps
@@ -46,66 +41,10 @@ declare global {
     readonly userId: string | null;
 
     /**
-     * The game World which is currently active.
-     */
-    readonly world: World;
-
-    /**
-     * The System which is used to power this game World.
-     */
-    readonly system: System;
-
-    /**
-     * A Map of active Modules which are currently eligible to be enabled in this World.
-     * The subset of Modules which are designated as active are currently enabled.
-     */
-    readonly modules: Game.ModuleCollection;
-
-    /**
      * A mapping of WorldCollection instances, one per primary Document type.
      * @remarks Initialized between the `"i18nInit"` and `"setup"` hook events
      */
-    readonly collections: foundry.utils.Collection<WorldCollection<DocumentConstructor, string>>;
-
-    /**
-     * A mapping of CompendiumCollection instances, one per Compendium pack.
-     * @remarks Initialized between the `"i18nInit"` and `"setup"` hook events
-     */
-    readonly packs: foundry.utils.Collection<CompendiumCollection<CompendiumCollection.Metadata>>;
-
-    /**
-     * A singleton web Worker manager.
-     */
-    readonly workers: WorkerManager;
-
-    /**
-     * Localization support
-     * @remarks Initialized between the `"init"` and `"i18nInit"` hook events.
-     */
-    readonly i18n: Localization;
-
-    /**
-     * The Keyboard Manager
-     * @remarks Initialized between the `"setup"` and `"ready"` hook events.
-     */
-    readonly keyboard: KeyboardManager;
-
-    /**
-     * The Mouse Manager
-     * @remarks Initialized between the `"setup"` and `"ready"` hook events.
-     */
-    readonly mouse: MouseManager;
-
-    /**
-     * The Gamepad Manager
-     * @remarks Initialized between the `"setup"` and `"ready"` hook events.
-     */
-    readonly gamepad: GamepadManager;
-
-    /**
-     * The New User Experience manager.
-     */
-    readonly nue: NewUserExperience;
+    readonly collections: foundry.utils.Collection<WorldCollection<DocumentConstructor>>;
 
     /**
      * The user role permissions setting
@@ -119,66 +58,9 @@ declare global {
     readonly sessionId: string;
 
     /**
-     * Client settings which are used to configure application behavior
-     * @remarks Settings are registered between `"init"` and `"i18nInit"` hook events.
-     */
-    readonly settings: ClientSettings;
-
-    /**
-     * Client keybindings which are used to configure application behavior
-     * @remarks Initialized between the `"setup"` and `"ready"` hook events.
-     */
-    readonly keybindings: ClientKeybindings;
-
-    /**
      * A reference to the open Socket.io connection
      */
     readonly socket: io.Socket;
-
-    /**
-     * A singleton GameTime instance which manages the progression of time within the game world.
-     */
-    readonly time: GameTime;
-
-    /**
-     * A singleton reference to the Canvas object which may be used.
-     * @remarks Initialized between the `"setup"` and `"ready"` hook events.
-     */
-    readonly canvas: Canvas;
-
-    /**
-     * A singleton instance of the Audio Helper class
-     */
-    readonly audio: AudioHelper;
-
-    /**
-     * A singleton instance of the Video Helper class
-     * @remarks Initialized between the `"i18nInit"` and `"setup"` hook events.
-     */
-    readonly video: VideoHelper;
-
-    /**
-     * A singleton instance of the TooltipManager class
-     * @remarks Initialized between the `"i18nInit"` and `"setup"` hook events.
-     */
-    readonly tooltip: TooltipManager;
-
-    /**
-     * A singleton instance of the Tour collection class
-     * @remarks Initialized between the `"i18nInit"` and `"setup"` hook events.
-     */
-    readonly tours: Tours;
-
-    /**
-     * The global document index.
-     * @remarks Initialized between the `"i18nInit"` and `"setup"` hook events.
-     */
-    readonly documentIndex: DocumentIndex;
-
-    /**
-     * The singleton instance of the ClientIssues manager.
-     */
-    readonly issues: ClientIssues;
 
     /**
      * Whether the Game is running in debug mode
@@ -289,68 +171,12 @@ declare global {
     /**
      * @remarks Initialized between the `"setup"` and `"ready"` hook events.
      */
-    actors?: ConfiguredCollectionClassForName<"Actor">;
-
-    /**
-     * @remarks Initialized between the `"setup"` and `"ready"` hook events.
-     */
-    items?: ConfiguredCollectionClassForName<"Item">;
-
-    /**
-     * @remarks Initialized between the `"setup"` and `"ready"` hook events.
-     */
-    scenes?: ConfiguredCollectionClassForName<"Scene">;
-
-    /**
-     * @remarks Initialized between the `"setup"` and `"ready"` hook events.
-     */
-    combats?: ConfiguredCollectionClassForName<"Combat">;
-
-    /**
-     * @remarks Initialized between the `"setup"` and `"ready"` hook events.
-     */
-    journal?: ConfiguredCollectionClassForName<"JournalEntry">;
-
-    /**
-     * @remarks Initialized between the `"setup"` and `"ready"` hook events.
-     */
-    macros?: ConfiguredCollectionClassForName<"Macro">;
-
-    /**
-     * @remarks Initialized between the `"setup"` and `"ready"` hook events.
-     */
-    playlists?: ConfiguredCollectionClassForName<"Playlist">;
-
-    /**
-     * @remarks Initialized between the `"setup"` and `"ready"` hook events.
-     */
-    tables?: ConfiguredCollectionClassForName<"RollTable">;
-
-    /**
-     * @remarks Initialized between the `"setup"` and `"ready"` hook events.
-     */
     cards?: ConfiguredCollectionClassForName<"Cards">;
-
-    /**
-     * @remarks Initialized between the `"setup"` and `"ready"` hook events.
-     */
-    messages?: ConfiguredCollectionClassForName<"ChatMessage">;
-
-    /**
-     * Initialize the Compendium packs which are present within this Game
-     * Create a Collection which maps each Compendium pack using it's collection ID
-     */
-    initializePacks(): Promise<this["packs"]>;
 
     /**
      * Initialize the WebRTC implementation
      */
     initializeRTC(): Promise<boolean>;
-
-    /**
-     * @remarks Initialized between the `"setup"` and `"ready"` hook events.
-     */
-    webrtc?: AVMaster;
 
     /**
      * Initialize core UI elements
@@ -398,11 +224,6 @@ declare global {
     get user(): StoredDocument<User.ConfiguredInstance> | null;
 
     /**
-     * A convenience accessor for the currently viewed Combat encounter
-     */
-    get combat(): CombatEncounters["viewed"];
-
-    /**
      * A state variable which tracks whether the game session is currently paused
      */
     get paused(): boolean;
@@ -421,12 +242,6 @@ declare global {
      * @returns The new paused state
      */
     togglePause(pause: boolean, push?: boolean): void;
-
-    /**
-     * Open Character sheet for current token or controlled actor
-     * @returns The ActorSheet which was toggled, or null if the User has no character
-     */
-    toggleCharacterSheet(): ActorSheet | null;
 
     /**
      * Log out of the game session by returning to the Join screen
@@ -547,16 +362,6 @@ declare global {
   }
 
   namespace Game {
-    interface ModuleCollection extends Collection<Module> {
-      /**
-       * Gets the module requested for by ID
-       * @see {@link ModuleConfig} to add custom properties to modules like APIs.
-       * @see {@link RequiredModules} to remove `undefined` from the return type for a given module
-       * @param id - The module ID to look up
-       */
-      get<T extends string>(id: T): (Module & ConfiguredModule<T>) | Exclude<ModuleRequiredOrOptional<T>, undefined>;
-    }
-
     type Data = {
       activeUsers: string[];
       addresses: {
@@ -588,7 +393,6 @@ declare global {
         } | null;
         storages: ("public" | "data" | "s3")[];
       };
-      modules: Module["_source"][];
       options: {
         language: string;
         port: number;
@@ -596,17 +400,16 @@ declare global {
         updateChannel: string;
       };
       packageWarnings: Record<string, unknown>;
-      packs: Array<
-        PackageCompendiumData & {
-          /** @deprecated since v11 */
-          private?: boolean;
-          system?: string;
-          type: foundry.CONST.COMPENDIUM_DOCUMENT_TYPES;
-        }
-      >;
+      // packs: Array<
+      //   PackageCompendiumData & {
+      //     /** @deprecated since v11 */
+      //     private?: boolean;
+      //     system?: string;
+      //     type: foundry.CONST.COMPENDIUM_DOCUMENT_TYPES;
+      //   }
+      // >;
       paused: boolean;
       release: foundry.config.ReleaseData["_source"];
-      system: System["_source"];
       systemUpdate: {
         hasUpdate: boolean;
         version: string;
@@ -618,11 +421,8 @@ declare global {
       // but is only filled in if there's `template.json`
       model: Record<foundry.CONST.DOCUMENT_TYPES, Record<string, object>>;
       userId: string;
-      world: World["_source"];
     } & {
-      [DocumentType in
-        | foundry.CONST.DOCUMENT_TYPES
-        | "Setting" as ConfiguredDocumentClassForName<DocumentType>["metadata"]["collection"]]?: InstanceType<
+      [DocumentType in foundry.CONST.DOCUMENT_TYPES]?: InstanceType<
         ConfiguredDocumentClassForName<DocumentType>
       >["_source"][];
     };
@@ -638,7 +438,7 @@ declare global {
    * @defaultValue `undefined`
    * Initialized between the `"DOMContentLoaded"` event and the `"init"` hook event.
    */
-  let canvas: "canvas" extends keyof LenientGlobalVariableTypes ? Canvas : Canvas | undefined;
+  // let canvas: "canvas" extends keyof LenientGlobalVariableTypes ? Canvas : Canvas | undefined;
 }
 
 type ConfiguredCollectionClassForName<Name extends foundry.CONST.DOCUMENT_TYPES> = InstanceType<

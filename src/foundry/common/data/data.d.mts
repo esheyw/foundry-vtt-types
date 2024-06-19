@@ -1,7 +1,7 @@
-import type { DatabaseBackend } from "../abstract/module.d.mts";
+// import type { DatabaseBackend } from "../abstract/module.d.mts";
 import type { DataModel } from "../abstract/data.d.mts";
 import type { fields } from "./module.d.mts";
-import type * as documents from "../documents/module.mjs";
+// import type * as documents from "../documents/module.mjs";
 import type { ValueOf } from "../../../types/utils.d.mts";
 
 // TODO: Implement all of the necessary options
@@ -279,103 +279,103 @@ declare class TextureData<
   constructor(options?: SchemaOptions, srcOptions?: SrcOptions);
 }
 
-declare namespace PrototypeToken {
-  // Not otherwise used
-  type ExcludedProperties =
-    | "_id"
-    | "actorId"
-    | "delta"
-    | "x"
-    | "y"
-    | "elevation"
-    | "effects"
-    | "overlayEffect"
-    | "hidden";
+// declare namespace PrototypeToken {
+//   // Not otherwise used
+//   type ExcludedProperties =
+//     | "_id"
+//     | "actorId"
+//     | "delta"
+//     | "x"
+//     | "y"
+//     | "elevation"
+//     | "effects"
+//     | "overlayEffect"
+//     | "hidden";
 
-  interface Schema extends foundry.documents.BaseToken.SharedProtoSchema {
-    // Name is technically redefined but with the same options so it's ignored here
-    // name: fields.StringField<{ required: true; blank: true }>;
+//   interface Schema extends foundry.documents.BaseToken.SharedProtoSchema {
+//     // Name is technically redefined but with the same options so it's ignored here
+//     // name: fields.StringField<{ required: true; blank: true }>;
 
-    /**
-     * Does the prototype token use a random wildcard image?
-     */
-    randomImg: fields.BooleanField;
-  }
+//     /**
+//      * Does the prototype token use a random wildcard image?
+//      */
+//     randomImg: fields.BooleanField;
+//   }
 
-  type ConstructorData = fields.SchemaField.InnerAssignmentType<Schema>;
-}
+//   // type ConstructorData = fields.SchemaField.InnerAssignmentType<Schema>;
+// }
 
-interface PrototypeToken extends fields.SchemaField.InnerInitializedType<PrototypeToken.Schema> {}
+// interface PrototypeToken extends fields.SchemaField.InnerInitializedType<PrototypeToken.Schema> {}
 
-declare class PrototypeToken extends DataModel<PrototypeToken.Schema, documents.BaseActor> {
-  constructor(data?: PrototypeToken.ConstructorData, options?: DataModel.ConstructorOptions);
+// declare class PrototypeToken extends DataModel<PrototypeToken.Schema, documents.BaseActor> {
+//   constructor(data?: PrototypeToken.ConstructorData, options?: DataModel.ConstructorOptions);
 
-  /** @defaultValue `{}` */
-  apps: Record<string, Application>;
+//   /** @defaultValue `{}` */
+//   apps: Record<string, Application>;
 
-  /**
-   * The Actor which owns this Prototype Token
-   */
-  get actor(): this["parent"];
+//   /**
+//    * The Actor which owns this Prototype Token
+//    */
+//   get actor(): this["parent"];
 
-  override toObject(source: true): this["_source"] & { actorId: string | undefined };
-  override toObject(source?: boolean): ReturnType<this["schema"]["toObject"]>;
+//   override toObject(source: true): this["_source"] & { actorId: string | undefined };
+//   override toObject(source?: boolean): ReturnType<this["schema"]["toObject"]>;
 
-  static get database(): DatabaseBackend;
+//   static get database(): DatabaseBackend;
 
-  static override migrateData(source: object): object;
+//   static override migrateData(source: object): object;
 
-  static override shimData(
-    data: object,
-    options?: {
-      /**
-       * Apply shims to embedded models?
-       * @defaultValue `true`
-       */
-      embedded?: boolean;
-    },
-  ): object;
+//   static override shimData(
+//     data: object,
+//     options?: {
+//       /**
+//        * Apply shims to embedded models?
+//        * @defaultValue `true`
+//        */
+//       embedded?: boolean;
+//     },
+//   ): object;
 
-  /**
-   * @see foundry.abstract.Document#update
-   */
-  update(data: unknown, options: unknown): unknown;
+//   /**
+//    * @see foundry.abstract.Document#update
+//    */
+//   update(data: unknown, options: unknown): unknown;
 
-  /**
-   * @see foundry.abstract.Document#getFlag
-   */
-  getFlag(args: unknown): unknown;
+//   /**
+//    * @see foundry.abstract.Document#getFlag
+//    */
+//   getFlag(args: unknown): unknown;
 
-  /**
-   * @see foundry.abstract.Document#setFlag
-   */
-  setFlag(args: unknown): unknown;
+//   /**
+//    * @see foundry.abstract.Document#setFlag
+//    */
+//   setFlag(args: unknown): unknown;
 
-  /**
-   * @see foundry.abstract.Document#unsetFlag
-   */
-  unsetFlag(args: unknown): Promise<unknown>;
+//   /**
+//    * @see foundry.abstract.Document#unsetFlag
+//    */
+//   unsetFlag(args: unknown): Promise<unknown>;
 
-  /**
-   * @see foundry.abstract.Document#testUserPermission
-   */
-  testUserPermission(
-    user: documents.BaseUser,
-    permission: unknown,
-    { exact }: { exact: boolean },
-  ): ReturnType<this["actor"]["testUserPermission"]>;
+//   /**
+//    * @see foundry.abstract.Document#testUserPermission
+//    */
+//   testUserPermission(
+//     user: documents.BaseUser,
+//     permission: unknown,
+//     { exact }: { exact: boolean },
+//   ): ReturnType<this["actor"]["testUserPermission"]>;
 
-  /**
-   * @see foundry.abstract.Document#isOwner
-   */
-  get isOwner(): boolean;
+//   /**
+//    * @see foundry.abstract.Document#isOwner
+//    */
+//   get isOwner(): boolean;
 
-  // Monkey patched in from `token.js`, put here due to issues with the merge process
-  /**
-   * @see TokenDocument#getBarAttribute
-   */
-  getBarAttribute: TokenDocument["getBarAttribute"];
-}
+//   // Monkey patched in from `token.js`, put here due to issues with the merge process
+//   /**
+//    * @see TokenDocument#getBarAttribute
+//    */
+//   getBarAttribute: TokenDocument["getBarAttribute"];
+// }
 
 declare namespace TombstoneData {
   type Schema = {
@@ -404,7 +404,7 @@ declare class TombstoneData extends DataModel<TombstoneData.Schema> {
 
 export {
   LightData,
-  PrototypeToken,
+  // PrototypeToken,
   // PrototypeTokenData,
   ShapeData,
   TextureData,

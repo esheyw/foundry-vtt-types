@@ -7,7 +7,7 @@ declare global {
    *
    * @see {@link Folder} The Folder document
    */
-  class Folders extends WorldCollection<typeof foundry.documents.BaseFolder, "Folders"> {
+  class Folders extends WorldCollection<typeof foundry.documents.BaseFolder> {
     constructor(data?: StoredDocument<Folder.ConfiguredInstance>["_source"][]);
 
     /**
@@ -16,8 +16,6 @@ declare global {
     protected _expanded: Partial<Record<string, boolean>>;
 
     static documentName: "Folder";
-
-    render(force?: boolean, context?: ApplicationOptions): void;
 
     /**
      * Refresh the display of any active JournalSheet instances where the folder list will change.

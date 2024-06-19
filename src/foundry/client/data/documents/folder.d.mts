@@ -1,11 +1,4 @@
-import type {
-  ConfiguredDocumentClass,
-  ConfiguredDocumentClassForName,
-  ConstructorDataType,
-  DocumentConstructor,
-  DocumentType,
-} from "../../../../types/helperTypes.d.mts";
-import type { DeepPartial } from "../../../../types/utils.d.mts";
+import type { ConfiguredDocumentClassForName, DocumentType } from "../../../../types/helperTypes.d.mts";
 import type { DocumentModificationOptions } from "../../../common/abstract/document.d.mts";
 import type BaseFolder from "../../../common/documents/folder.d.mts";
 import type { BaseUser } from "../../../common/documents/module.d.mts";
@@ -75,45 +68,6 @@ declare global {
       options: DocumentModificationOptions,
       user: BaseUser,
     ): Promise<boolean | void>;
-
-    /**
-     * Present a Dialog form to create a new Folder.
-     * @see {@link ClientDocument.createDialog}
-     * @param data    - Initial data with which to populate the creation form
-     *                  (default: `{}`)
-     * @param context - Additional context options or dialog positioning options
-     *                  (default: `{}`)
-     * @returns A Promise which resolves to the created Folder, or null if the dialog was closed.
-     *
-     * @remarks For weird reasons, we need to make this generic.
-     */
-    static createDialog<T extends DocumentConstructor>(
-      this: T,
-      data?: DeepPartial<ConstructorDataType<T> | (ConstructorDataType<T> & Record<string, unknown>)>,
-      context?: Partial<Omit<FolderConfig.Options, "resolve">>,
-    ): Promise<InstanceType<ConfiguredDocumentClass<T>> | null | undefined>;
-
-    /**
-     * Export all Documents contained in this Folder to a given Compendium pack.
-     * Optionally update existing Documents within the Pack by name, otherwise append all new entries.
-     * @param pack    - A Compendium pack to which the documents will be exported
-     * @param options - Additional options which customize how content is exported. See {@link ClientDocument#toCompendium}
-     *                  (default: `{}`)
-     * @returns The updated Compendium Collection instance
-     */
-    exportToCompendium<Metadata extends CompendiumCollection.Metadata>(
-      pack: CompendiumCollection<Metadata>,
-      options?: Folder.ExportToCompendiumOptions,
-    ): Promise<CompendiumCollection<Metadata>>;
-
-    /**
-     * Provide a dialog form that allows for exporting the contents of a Folder into an eligible Compendium pack.
-     * @param pack    - A pack ID to set as the default choice in the select input
-     * @param options - Additional options passed to the Dialog.prompt method
-     *                  (default: `{}`)
-     * @returns A Promise which resolves or rejects once the dialog has been submitted or closed
-     */
-    exportDialog(pack: string, options?: DialogOptions): Promise<void>;
 
     /**
      * Get the Folder documents which are sub-folders of the current folder, either direct children or recursively.

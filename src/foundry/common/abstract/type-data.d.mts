@@ -61,7 +61,7 @@ export default abstract class TypeDataModel<
   Schema extends DataSchema,
   Parent extends Document<DataSchema, any, any>,
 > extends DataModel<Schema, Parent> {
-  modelProvider: System | Module | null;
+  // modelProvider: System | Module | null;
 
   /**
    * Prepare data related to this DataModel itself, before any derived data is computed.
