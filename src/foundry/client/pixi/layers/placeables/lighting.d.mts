@@ -23,13 +23,15 @@ declare global {
      * foundry.utils.mergeObject(super.layerOptions, {
      *  name: "lighting",
      *  rotatableObjects: true,
-     *  zIndex: 300
+     *  zIndex: 900
      * })
      * ```
      */
     static override get layerOptions(): LightingLayer.LayerOptions;
 
     override get hookName(): string;
+
+    override _draw(options?: Record<string, unknown>): Promise<void>;
 
     override _activate(): void;
 

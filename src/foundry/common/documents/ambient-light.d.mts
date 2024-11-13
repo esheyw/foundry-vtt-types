@@ -25,6 +25,8 @@ declare class BaseAmbientLight extends Document<BaseAmbientLight.Schema, BaseAmb
   static override defineSchema(): BaseAmbientLight.Schema;
 
   static override migrateData(source: AnyObject): AnyObject;
+
+  static override LOCALIZATION_PREFIXES: string[];
 }
 
 export default BaseAmbientLight;
@@ -60,31 +62,31 @@ declare namespace BaseAmbientLight {
      * The x-coordinate position of the origin of the light
      * @defaultValue `0`
      */
-    x: fields.NumberField<{ required: true; integer: true; nullable: false; initial: 0; label: "XCoord" }>;
+    x: fields.NumberField<{ required: true; integer: true; nullable: false; initial: 0 }>;
 
     /**
      * The y-coordinate position of the origin of the light
      * @defaultValue `0`
      */
-    y: fields.NumberField<{ required: true; integer: true; nullable: false; initial: 0; label: "YCoord" }>;
+    y: fields.NumberField<{ required: true; integer: true; nullable: false; initial: 0 }>;
 
     /**
      * The angle of rotation for the tile between 0 and 360
      * @defaultValue `0`
      */
-    rotation: fields.AngleField<{ label: "LIGHT.Rotation" }>;
+    rotation: fields.AngleField;
 
     /**
      * Whether or not this light source is constrained by Walls
      * @defaultValue `true`
      */
-    walls: fields.BooleanField<{ initial: true; label: "LIGHT.Walls"; hint: "LIGHT.WallsHint" }>;
+    walls: fields.BooleanField<{ initial: true }>;
 
     /**
      * Whether or not this light source provides a source of vision
      * @defaultValue `false`
      */
-    vision: fields.BooleanField<{ label: "LIGHT.Vision"; hint: "LIGHT.VisionHint" }>;
+    vision: fields.BooleanField;
 
     /**
      * Light configuration data
@@ -96,7 +98,7 @@ declare namespace BaseAmbientLight {
      * Is the light source currently hidden?
      * @defaultValue `false`
      */
-    hidden: fields.BooleanField<{ label: "Hidden" }>;
+    hidden: fields.BooleanField;
 
     /**
      * An object of optional key/value flags
